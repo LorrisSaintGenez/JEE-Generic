@@ -1,3 +1,5 @@
+package Ex1;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -71,7 +73,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student :"
+        return "Ex1.Student :"
                 + "\nLogin : " + login
                 + "\nFullName : " + firstName + " " + lastName
                 + "\nEmail : " + email;

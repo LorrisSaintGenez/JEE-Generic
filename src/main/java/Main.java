@@ -47,12 +47,10 @@ public class Main {
     private static void AddEntity(String[] input, Class cls, ServiceGeneric serviceGeneric) {
         Object[] vars = new Object[input.length - 2];
         Class[] classes = new Class[input.length - 2];
-
         for (int i = 2; i < input.length; i++) {
             vars[i - 2] = input[i];
             classes[i - 2] = input[i].getClass();
         }
-
         try {
             Constructor<?> cTor = cls.getConstructor(classes);
             serviceGeneric.createEntity(cTor.newInstance(vars));
@@ -61,11 +59,31 @@ public class Main {
         }
     }
 
+    private static void ListEntity(String[] input,  Class cls, ServiceGeneric serviceGeneric) {
+        try {
+            if (input[2].toLowerCase().equals("json")) {
+                ArrayList listEntity = serviceGeneric.listEntity(cls);
+                StringBuilder sb = new StringBuilder();
+                listEntity.forEach(e -> {
+                    ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+                    try {
+                        sb.append(ow.writeValueAsString(e));
+                    } catch (IOException ioe) {
+                        ioe.printStackTrace();
+                    }
+                });
+                System.out.println(sb.toString());
+            }
+        } catch (Exception e) {
+            serviceGeneric.listEntity(cls).forEach(System.out::println);
+        }
+    }
+
     public static void main(String[] args) {
 
         final List<Class<?>> classesForPackage = findInPackage("Ex2.Entity");
-        Map<String, Class<?>> classMap = new HashMap<>();
 
+        Map<String, Class<?>> classMap = new HashMap<>();
         classesForPackage.forEach(c -> classMap.put(c.getSimpleName().toLowerCase(), c));
 
         final ServiceGeneric serviceGeneric = new ServiceGeneric();
@@ -84,23 +102,7 @@ public class Main {
                 case "list":
                     String classAction = input[1].toLowerCase();
                     Class cls = classMap.get(classAction);
-                    try {
-                        if (input[2].toLowerCase().equals("json")) {
-                            ArrayList listEntity = serviceGeneric.listEntity(cls);
-                            StringBuilder sb = new StringBuilder();
-                            listEntity.forEach(e -> {
-                                ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-                                try {
-                                    sb.append(ow.writeValueAsString(e));
-                                } catch (IOException ioe) {
-                                    ioe.printStackTrace();
-                                }
-                            });
-                            System.out.println(sb.toString());
-                        }
-                    } catch (Exception e) {
-                        serviceGeneric.listEntity(cls).forEach(System.out::println);
-                    }
+                    ListEntity(input, cls, serviceGeneric);
                     break;
                 case "add":
                     String classString = input[1].toLowerCase();

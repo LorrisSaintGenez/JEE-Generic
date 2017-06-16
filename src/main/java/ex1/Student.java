@@ -1,4 +1,4 @@
-package Ex1;
+package ex1;
 
 import lombok.Data;
 import lombok.Getter;

@@ -1,0 +1,3 @@
+<interceptors>
+    <class>ex2.interceptor.TransactionInterceptor</class>
+</interceptors>

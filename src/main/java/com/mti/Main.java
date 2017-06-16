@@ -1,3 +1,5 @@
+package com.mti;
+
 import ex2.service.ServiceGeneric;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;

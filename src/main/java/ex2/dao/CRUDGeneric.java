@@ -1,5 +1,7 @@
 package ex2.dao;
 
+import ex2.interceptor.Transaction;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.*;
@@ -14,26 +16,24 @@ public @ApplicationScoped class CRUDGeneric {
     @Inject
     private EntityManager em;
 
+    @Transaction
     public <T> ArrayList<T> listEntity(Class classEntity) {
         Query q = em.createQuery("SELECT x from " + classEntity.getSimpleName() + " x" );
         return (ArrayList<T>) q.getResultList();
     }
 
+    @Transaction
     public <T> void createEntity(T entity) {
-        em.getTransaction().begin();
         em.persist(entity);
-        em.getTransaction().commit();
     }
 
+    @Transaction
     public <T> void deleteEntity(T entity) {
-        em.getTransaction().begin();
         em.remove(entity);
-        em.getTransaction().commit();
     }
 
+    @Transaction
     public <T> void updateEntity(T entity) {
-        em.getTransaction().begin();
         em.merge(entity);
-        em.getTransaction().commit();
     }
 }

@@ -19,6 +19,4 @@ public class EntityManagerProducer {
     public void disposeEntityManager(@Disposes EntityManager em) {
         em.close();
     }
-
-
 }

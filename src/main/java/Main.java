@@ -1,7 +1,10 @@
 import Ex2.Service.ServiceGeneric;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
+import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.environment.se.WeldContainer;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -12,6 +15,7 @@ import java.util.*;
 /**
  * Created by Lorris on 10/06/2017.
  */
+
 public class Main {
 
     private static List<Class<?>> findInPackage(String packageName) {
@@ -79,14 +83,16 @@ public class Main {
         }
     }
 
+    @ApplicationScoped
     public static void main(String[] args) {
+
+        Weld weld = new Weld();
+        WeldContainer container = weld.initialize();
 
         final List<Class<?>> classesForPackage = findInPackage("Ex2.Entity");
 
         Map<String, Class<?>> classMap = new HashMap<>();
         classesForPackage.forEach(c -> classMap.put(c.getSimpleName().toLowerCase(), c));
-
-        final ServiceGeneric serviceGeneric = new ServiceGeneric();
 
         while(true) {
             Scanner reader = new Scanner(System.in);
@@ -102,14 +108,15 @@ public class Main {
                 case "list":
                     String classAction = input[1].toLowerCase();
                     Class cls = classMap.get(classAction);
-                    ListEntity(input, cls, serviceGeneric);
+                    ListEntity(input, cls, container.select(ServiceGeneric.class).get());
                     break;
                 case "add":
                     String classString = input[1].toLowerCase();
                     Class classFromMap = classMap.get(classString);
-                    AddEntity(input, classFromMap, serviceGeneric);
+                    AddEntity(input, classFromMap, container.select(ServiceGeneric.class).get());
                     break;
                 case "exit":
+                    container.shutdown();
                     System.exit(0);
                     break;
                 default:

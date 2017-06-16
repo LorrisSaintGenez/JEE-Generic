@@ -1,6 +1,7 @@
 package ex2.dao;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.*;
 import java.util.ArrayList;
 
@@ -10,8 +11,8 @@ import java.util.ArrayList;
 
 public @ApplicationScoped class CRUDGeneric {
 
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAPersistenceName");
-    private EntityManager em = emf.createEntityManager();
+    @Inject
+    private EntityManager em;
 
     public <T> ArrayList<T> listEntity(Class classEntity) {
         Query q = em.createQuery("SELECT x from " + classEntity.getSimpleName() + " x" );

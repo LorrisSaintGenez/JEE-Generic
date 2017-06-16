@@ -1,19 +1,20 @@
 package Ex2.DAO;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.*;
 import java.util.ArrayList;
 
 /**
  * Created by Lorris on 10/06/2017.
  */
-public class CRUDGeneric {
+
+public @ApplicationScoped class CRUDGeneric {
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAPersistenceName");
-
     private EntityManager em = emf.createEntityManager();
 
     public <T> ArrayList<T> listEntity(Class classEntity) {
-        em = emf.createEntityManager();
         Query q = em.createQuery("SELECT x from " + classEntity.getSimpleName() + " x" );
         return (ArrayList<T>) q.getResultList();
     }
@@ -23,7 +24,6 @@ public class CRUDGeneric {
         em.persist(entity);
         em.getTransaction().commit();
     }
-
 
     public <T> void deleteEntity(T entity) {
         em.getTransaction().begin();

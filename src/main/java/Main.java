@@ -1,4 +1,4 @@
-import Ex2.Service.ServiceGeneric;
+import ex2.service.ServiceGeneric;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
 import org.jboss.weld.environment.se.Weld;
@@ -89,7 +89,7 @@ public class Main {
         Weld weld = new Weld();
         WeldContainer container = weld.initialize();
 
-        final List<Class<?>> classesForPackage = findInPackage("Ex2.Entity");
+        final List<Class<?>> classesForPackage = findInPackage("ex2.entity");
 
         Map<String, Class<?>> classMap = new HashMap<>();
         classesForPackage.forEach(c -> classMap.put(c.getSimpleName().toLowerCase(), c));

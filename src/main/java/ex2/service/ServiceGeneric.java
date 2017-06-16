@@ -1,11 +1,9 @@
-package Ex2.Service;
+package ex2.service;
 
-import Ex2.DAO.CRUDGeneric;
+import ex2.dao.CRUDGeneric;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.inject.Qualifier;
-import javax.persistence.Query;
 import java.util.ArrayList;
 
 /**

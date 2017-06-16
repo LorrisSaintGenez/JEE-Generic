@@ -1,4 +1,4 @@
-package Ex2.Entity;
+package ex2.entity;
 
 import lombok.Data;
 
@@ -8,20 +8,17 @@ import javax.persistence.*;
  * Created by Lorris on 10/06/2017.
  */
 
-@Entity
 @Data
-public class Sharing {
+@Entity
+public class ProfileHasParameter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
 
     @ManyToOne
-    private User user1;
+    private Profile profile;
 
     @ManyToOne
-    private User user2;
-
-    @ManyToOne
-    private Media media;
+    private Parameter parameter;
 }

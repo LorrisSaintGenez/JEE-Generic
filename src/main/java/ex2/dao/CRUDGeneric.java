@@ -1,7 +1,6 @@
-package Ex2.DAO;
+package ex2.dao;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.persistence.*;
 import java.util.ArrayList;
 

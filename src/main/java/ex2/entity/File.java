@@ -1,4 +1,4 @@
-package Ex2.Entity;
+package ex2.entity;
 
 import lombok.Data;
 
